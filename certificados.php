@@ -250,7 +250,6 @@ class Certificados{
 			$nombreCerPem = $this->_path.$nombreCerPem;
 		}
 		
-		
 		if (file_exists($nombreCerPem) && file_exists($nombreKeyPem)){
 			$salidaCer = shell_exec('openssl x509 -noout -modulus -in '.$nombreCerPem.' 2>&1');
 			$salidaKey = shell_exec('openssl rsa -noout -modulus -in '.$nombreKeyPem.' 2>&1');
@@ -281,11 +280,6 @@ class Certificados{
         }
         
         function selloGenerar($cadenaOriginal){
-            //file_put_contents('sign.bin', '');
-            //$cadenaOriginal = file_get_contents('cadena_original.txt');
-            //ñ$generaSello = shell_exec('openssl dgst -sha256 -sign '.$this->_keyPem.' '.$cadenaOriginal.' | openssl enc -base64 -A 2>&1');
-            //$generaSello = shell_exec('openssl dgst -sha256 -out sign.bin -sign '.$this->_keyPem.' cadena_original.txt 2>&1');
-            //return $generaSello; //= base64_encode(file_get_contents('sign.bin'));
             return shell_exec('openssl dgst -sha256 -sign '.$this->_keyPem.' '.$cadenaOriginal.' 2>&1 | openssl enc -base64 -A 2>&1');
         }
         
@@ -304,16 +298,7 @@ class Certificados{
              return (string)trim(explode('/', openssl_x509_parse(file_get_contents($nombreCerPem))['subject']['x500UniqueIdentifier'])[0]);
         } 
         
-        
-        function Hex2String($hex){
-            $string='';
-            for ($i=0; $i < strlen($hex)-1; $i+=2){
-                $string .= chr(hexdec($hex[$i].$hex[$i+1]));
-            }
-            return $string;
-        }
-        
-        function getSerialNumberPHP($nombreCerPem){
+        function getSerialNumber($nombreCerPem){
             
            $salida = openssl_x509_parse(file_get_contents($nombreCerPem))['serialNumberHex'];
 
