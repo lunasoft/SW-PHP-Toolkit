@@ -82,8 +82,6 @@ class Certificados{
 			$nombreCerPem = $this->_path.$nombreCerPem;
 		}
 		
-		
-		
 		$pfx = explode('.', $nombreKeyPem);
 		$pfx = $pfx[0].'.pfx';
 		
@@ -201,8 +199,6 @@ class Certificados{
 			$this->_estableceError(0, 'El archivo requerido no esta disponible');
 			return $this->_return;
 		}
-		
-		
 	}
         
 	function validarCertificado($nombreCerPem = null){
